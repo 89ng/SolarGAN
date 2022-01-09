@@ -1,0 +1,48 @@
+data:
+  type: solargan_im
+  train_dir: data/graycube
+  test_dir: data/graycube-test
+  img_size: 128
+dvae:
+  name: BetaVAE_H
+  runname: dvae_onehot
+  ckptname: last 
+  c_dim: 32
+  nc: 5
+generator:
+  name: dvae_dec 
+  kwargs:
+      nc: 1
+discriminator:
+  name: dvae_enc 
+  kwargs:
+      nc: 1
+z_dist:
+  type: gauss
+  dim: 4
+training:
+  reg_param: 10.
+  w_info: 0.01
+  batch_size: 64
+  nworkers: 16
+  take_model_average: true
+  model_average_beta: 0.999
+  model_average_reinit: false
+  monitoring: tensorboard
+  sample_every: 1000
+  inception_every: -1 
+  save_every: 500
+  backup_every: 100000
+  max_iter: 2000000
+  restart_every: -1
+  optimizer: rmsprop
+  lr_g: 0.0005
+  lr_d: 0.00005
+  lr_anneal: 0.7
+  lr_anneal_every: 100000
+  d_steps: 1
+  equalize_lr: false
+test:
+  out_name: outputs/idgan4
+  batch_size: 36
+
