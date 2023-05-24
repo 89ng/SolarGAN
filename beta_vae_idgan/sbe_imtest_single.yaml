@@ -1,0 +1,50 @@
+data:
+  type: solargan_im
+  train_dir: sbe_graycube_test
+  test_dir: sbe_graycube_test
+  img_size: 128
+dvae:
+  name: BetaVAE_H
+  runname: dvae_onehot
+  ckptname: last 
+  c_dim: 32
+  nc: 5
+generator:
+  name: resnet3
+  kwargs:
+    nfilter: 64
+    nfilter_max: 512
+discriminator:
+  name: resnet3
+  kwargs:
+    nfilter: 64
+    nfilter_max: 512
+z_dist:
+  type: gauss
+  dim: 4
+training:
+  reg_param: 10.
+  w_info: 0.01
+  batch_size: 1
+  nworkers: 16
+  take_model_average: true
+  model_average_beta: 0.999
+  model_average_reinit: false
+  monitoring: tensorboard
+  sample_every: 1000
+  inception_every: -1 
+  save_every: 500
+  backup_every: 100000
+  max_iter: 2000000
+  restart_every: -1
+  optimizer: rmsprop
+  lr_g: 0.0001
+  lr_d: 0.0001
+  lr_anneal: 0.9
+  lr_anneal_every: 100000
+  d_steps: 1
+  equalize_lr: false
+test:
+  out_name: outputs/idgan5
+  batch_size: 1
+
